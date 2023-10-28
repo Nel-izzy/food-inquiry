@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 
 import Restaurant from "../models/restaurantModel.js";
-//import { generateToken } from "../utils/generateToken.js";
+
 
 export const getRestaurants = asyncHandler(async (req, res) => {
     const restaurants = await Restaurant.find({});

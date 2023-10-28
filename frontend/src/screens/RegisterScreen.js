@@ -48,7 +48,7 @@ const RegisterScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate("/recipes");
     }
   }, [navigate, userInfo]);
 

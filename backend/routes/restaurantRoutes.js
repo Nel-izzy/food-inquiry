@@ -4,7 +4,7 @@ import {
  getRestaurants,
  addRestaurant
  
-} from '../controllers/recipeController.js';
+} from '../controllers/restaurantController.js';
 import { protectRoute} from '../middleware/authMiddleware.js'
 
 

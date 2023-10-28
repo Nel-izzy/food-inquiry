@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import {
 
-  addFriendReducer,
+  
   userDetailsReducer,
   userListReducer,
   userLoginReducer,
@@ -10,6 +10,8 @@ import {
   userRegisterReducer,
  
 } from "./reducer/userReducer";
+import { recipeCreateReducer, recipeListReducer } from "./reducer/recipeReducer";
+import { restaurantCreateReducer, restaurantListReducer } from "./reducer/restaurantReducer";
 
 const localStorageUserInfo = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
@@ -31,7 +33,11 @@ const store = configureStore({
     userList: userListReducer,
     userDetails: userDetailsReducer,
     userProfileUpdate: userProfileUpdateReducer,
-    addFriend: addFriendReducer,
+    recipeCreate: recipeCreateReducer,
+    recipeList: recipeListReducer,
+    restaurantCreate: restaurantCreateReducer,
+    restaurantList: restaurantListReducer
+    
   },
   preloadedState,
 });

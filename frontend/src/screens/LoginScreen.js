@@ -32,7 +32,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/');
+      navigate('/recipes');
     }
   }, [userInfo, navigate]);
 

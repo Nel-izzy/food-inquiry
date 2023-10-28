@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import { Button, Form, FormControl } from "react-bootstrap";
 
-import { createRecipe, listRecipes } from "../actions/recipeActions";
+import { createRestaurant, listRestaurants } from "../actions/restaurantActions";
 import { useDispatch} from "react-redux";
 
 
-const RecipeSearchBox = () => {
+const RestaurantSearchBox = () => {
   const [keyword, setKeyword] = useState("");
 
- 
+  
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
    
-      dispatch(createRecipe(keyword));
-      dispatch(listRecipes(keyword));
+      dispatch(createRestaurant(keyword));
+      dispatch(listRestaurants(keyword));
       
     } else {
-      dispatch(listRecipes());
+      dispatch(listRestaurants());
     }
     setKeyword("")
   };
@@ -28,7 +28,7 @@ const RecipeSearchBox = () => {
       <FormControl
         type="text"
         name="query"
-        placeholder="Search Recipes..."
+        placeholder="Search Restaurants..."
         onChange={(e) => setKeyword(e.target.value)}
         className="mr-sm-2 ml-sm-5 w-100"
       ></FormControl>
@@ -39,4 +39,4 @@ const RecipeSearchBox = () => {
   );
 };
 
-export default RecipeSearchBox;
+export default RestaurantSearchBox;

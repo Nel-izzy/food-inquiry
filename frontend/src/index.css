@@ -14,3 +14,14 @@ code {
 .text-right{
   float: right;
 }
+.justify-content{
+  display: flex;
+  justify-content:space-between
+}
+.navbar{
+  background-color: #5D3FD3 !important;
+}
+
+button {
+  background-color: #5D3FD3 !important;
+}

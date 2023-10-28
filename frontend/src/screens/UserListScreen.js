@@ -1,135 +1,61 @@
-import React, { useEffect, useState } from "react";
-import { Button, Table, Row, Col } from "react-bootstrap";
+import React, { useEffect } from "react";
+import {useNavigate } from "react-router-dom";
+import { Row, Col, ListGroup,  ListGroupItem} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { LinkContainer } from "react-router-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { deleteUser, listUsers } from "../actions/userActions";
+
 import Loader from "../components/Loader";
-import Message from "../components/Message";
-import Modalify from "../components/Modalify";
+
+
+import { listUsers } from "../actions/userActions";
+import UserProfile from "../components/UserProfile";
 
 const UserListScreen = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [modalShow, setModalShow] = useState(false);
-  const [successCreate, setSuccessCreate] = useState(false);
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+ 
+ 
+  const {users, loading} = useSelector((state) => state.userList);
+ 
 
-  const { userInfo } = useSelector((state) => state.userLogin);
 
-  const userList = useSelector((state) => state.userList);
-  const { loading, error, users } = userList;
-  const userDelete = useSelector((state) => state.userDelete);
-  const { success: successDelete } = userDelete;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listUsers());
-      setSuccessCreate(false);
-    } else {
+    if (!userInfo) {
       navigate("/login");
+    }else{
+      
+      dispatch(listUsers())
+     
     }
-  }, [dispatch, navigate, userInfo, successDelete, successCreate]);
 
-  const deleteHandler = (id) => {
-    if (window.confirm("Are you sure")) {
-      dispatch(deleteUser(id));
-    }
-  };
+   
+ 
+  }, [userInfo, navigate, dispatch]);
+
+  
 
   return (
     <>
-      <Link to="/" className="btn btn-info my-3">
-        Go Back
-      </Link>
+      <Row className="py-5">
+        <UserProfile />
+        <Col xs={12} md={6}>
+          <h4 className="text-center">All Users</h4>
+          <ListGroup>
 
-      <Modalify
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-        onCreate={() => setSuccessCreate(true)}
-      />
-      <Row>
-        <Col>
-          <h1>Users</h1>
+           {loading ? <Loader /> : 
+           users.map(user=>(
+            <ListGroupItem key={user._id} className="justify-content">
+              <span>{user.name}</span><span>{user.email}</span>
+            </ListGroupItem>
+           ))}
+          </ListGroup>
+          
+          
         </Col>
-        {userInfo.isAdmin && (
-          <Col className="text-right">
-            <Button type="button" onClick={() => setModalShow(true)}>
-              <i className="fas fa-plus" /> Add new User
-            </Button>
-          </Col>
-        )}
+        
       </Row>
-
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">{error}</Message>
-      ) : (
-        <Table bordered striped hover responsive className="table-sm">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>COMPANY</th>
-              <th>ADMIN</th>
-              <th>TYPE</th>
-              <th>VERIFIED</th>
-              <th>ACC MGR</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.length > 0 &&
-              users.map((user) => (
-                <tr key={user._id}>
-                  <td>{user._id.slice(-6)}</td>
-                  <td>{user.name}</td>
-                  <td>
-                    <a href={`mailto:${user.email}`}>{user.email}</a>
-                  </td>
-                  <td>{user.company}</td>
-                  <td>
-                    {user.isAdmin ? (
-                      <i className="fas fa-check" style={{ color: "green" }} />
-                    ) : (
-                      <i className="fas fa-times" style={{ color: "red" }} />
-                    )}
-                  </td>
-                  <td>{user.type}</td>
-                  <td>
-                    {user.verified ? (
-                      <i className="fas fa-check" style={{ color: "green" }} />
-                    ) : (
-                      <i className="fas fa-times" style={{ color: "red" }} />
-                    )}
-                  </td>
-                  <td>
-                    {user.isAccountManager ? (
-                      <i className="fas fa-check" style={{ color: "green" }} />
-                    ) : (
-                      <i className="fas fa-times" style={{ color: "red" }} />
-                    )}
-                  </td>
-                  <td>
-                    <LinkContainer to={`/user/${user._id}/edit`}>
-                      <Button className="btn-sm">
-                        <i className="fas fa-edit" />
-                      </Button>
-                    </LinkContainer>
-                    <Button
-                      className="btn-sm"
-                      variant="danger"
-                      onClick={() => deleteHandler(user._id)}
-                    >
-                      <i className="fas fa-trash" />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-      )}
     </>
   );
 };
