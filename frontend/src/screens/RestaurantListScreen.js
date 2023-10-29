@@ -6,10 +6,11 @@ import { Row, Col, ListGroup,  ListGroupItem
 import { useDispatch, useSelector } from "react-redux";
 
 import Loader from "../components/Loader";
-import RestaurantSearchBox from "../components/RestaurantSearchBox";
+
 import { listRestaurants } from "../actions/restaurantActions";
 import UserProfile from "../components/UserProfile";
 import Message from "../components/Message";
+import RestaurantSearchBox from "../components/RestaurantSearchBox";
 
 
 const RestaurantListScreen = () => {

@@ -18,9 +18,7 @@ const RecipeSearchBox = () => {
       dispatch(createRecipe(keyword));
       dispatch(listRecipes(keyword));
       
-    } else {
-      dispatch(listRecipes());
-    }
+    } 
     setKeyword("")
   };
   return (

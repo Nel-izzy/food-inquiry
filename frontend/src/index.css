@@ -18,10 +18,19 @@ code {
   display: flex;
   justify-content:space-between
 }
-.navbar{
-  background-color: #5D3FD3 !important;
+
+.justify-content2{
+  display: flex;
+  justify-content:left
 }
 
-button {
+
+button, .btn, .navbar {
   background-color: #5D3FD3 !important;
+  outline: none;
+}
+.amount {
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 15px;
 }
